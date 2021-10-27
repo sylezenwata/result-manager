@@ -163,7 +163,7 @@ class Dashboard extends Component {
       }));
       this.handleGetResults('Searching result(s)...');
     } else {
-      this.props.dispatchNotifier({message: 'Please enter a valid search value'})
+      this.props.dispatchNotifier({message: 'Please enter a valid search value', type: 'error'})
     }
   };
 
