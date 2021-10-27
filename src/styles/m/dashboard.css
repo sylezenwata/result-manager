@@ -1,0 +1,32 @@
+.result-wrap .icon {
+    width: 24px;
+    height: 24px;
+}
+
+.filter__wrap {
+    flex-basis: 100%;
+    flex-grow: 1;
+    background-color: var(--bg-color);
+    margin-top: 10px;
+}
+
+.filter__wrap .input-wrap {
+    margin-top: 0;
+    min-width: 215px;
+    flex: 1 1 0%;
+}
+
+.filter__wrap .input-wrap .form-input {
+    font-size: 12px;
+}
+
+.drop-arrow {
+    background-color: var(--bg-color);
+    right: 33px;
+    border-color: var(--bg-color);
+    border: none;
+}
+
+.drop-arrow__up {
+    top: -7px;
+}
