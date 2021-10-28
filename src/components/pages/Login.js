@@ -16,6 +16,7 @@ import '../../styles/m/login.css';
 
 import { callLogin } from "../../utils/apiCalls";
 import { sessionToken, sessionUser } from "../../utils/funcs";
+import InternalLoader from "../hoc/InternalLoader";
 
 class Login extends Component {
 
@@ -108,7 +109,13 @@ class Login extends Component {
                                     </div>
                                     <div className={`btn-wrap`}>
                                         <button disabled={this.state.submitting} type="submit" className="btn primary w-100">
-                                        {this.state.submitting ? 'Verifying...' : 'Log In'}
+                                        {
+                                            this.state.submitting 
+                                            ? 
+                                            <InternalLoader message='Verifying...' />
+                                            : 
+                                            'Log In'
+                                        }
                                         </button>
                                     </div>
                                 </div>

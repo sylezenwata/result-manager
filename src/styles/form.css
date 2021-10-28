@@ -66,6 +66,7 @@ button:focus {
 	background: var(--mute-color-2);
 	-webkit-box-shadow: unset;
 	box-shadow: unset;
+    color: var(--color-scheme);
 }
 /* form input */
 .input-wrap {

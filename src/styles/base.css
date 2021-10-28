@@ -665,3 +665,14 @@ button .icon {
 	padding: 10px;
 	font-weight: 600;
 }
+/* loader */
+.jx-loader {
+	border: 3px solid rgba(111, 66, 193, 0.16);
+	border-top: 3px solid var(--color-scheme);
+	/*border-bottom: 3px solid #21d4fd;*/
+	border-radius: 100%;
+	width: 20px;
+	height: 20px;
+	-webkit-animation: spinner .6s linear infinite;
+	animation: spinner .6s linear infinite;
+}

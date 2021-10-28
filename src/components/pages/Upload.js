@@ -16,6 +16,7 @@ import { callResultUpload } from '../../utils/apiCalls';
 import Noitifier from '../hoc/Notifier';
 
 import BarLoader from '../hoc/BarLoader';
+import InternalLoader from '../hoc/InternalLoader';
 
 class Upload extends Component {
 
@@ -167,17 +168,23 @@ class Upload extends Component {
                             <div className="flex justify-e" style={{paddingTop: '5px', visibility: `${this.state.fileSelected ? 'visible' : 'hidden'}`}}><button disabled={this.state.submitting} type="button" onClick={this.handleClearCsvFile} className="btn default f-12" style={{backgroundColor: 'transparent', padding: '5px', color: 'var(--sec-color-scheme)', textDecoration: 'underline', border: 'none', outline: 'none', boxShadow: 'none'}}>Remove</button></div>
                             <div className="btn-wrap">
                               <button disabled={this.state.submitting} type="submit" className="btn primary flex align-c" style={{paddingTop: '7px', paddingBottom: '7px'}}>
-                                <span className="icon stroke-light" role="img">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width={44} height={44} viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M7 18a4.6 4.4 0 0 1 0 -9a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-1" />
-                                    <polyline points="9 15 12 12 15 15" />
-                                    <line x1={12} y1={12} x2={12} y2={21} />
-                                  </svg>
-                                </span>
-                                <span className="p-lr-5">
-                                {this.state.submitting ? 'Uploading...' : 'Upload'}
-                                </span>
+                                {
+                                  this.state.submitting 
+                                  ?
+                                  <InternalLoader message='Uploading...' />
+                                  : 
+                                  <>
+                                  <span className="icon stroke-light" role="img">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={44} height={44} viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                      <path d="M7 18a4.6 4.4 0 0 1 0 -9a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-1" />
+                                      <polyline points="9 15 12 12 15 15" />
+                                      <line x1={12} y1={12} x2={12} y2={21} />
+                                    </svg>
+                                  </span>
+                                  <span className="p-lr-5">Upload</span>
+                                  </>
+                                }
                               </button>
                           </div>
                           </form>

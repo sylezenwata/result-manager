@@ -100,9 +100,10 @@ export const callGetResult = async (filter = null) => {
   if (filter) {
     filter = Object.keys(filter).reduce((arr, key) => {
       arr.push(`${key}=${filter[key]}`);
-      return arr.join('&');
+      return arr;
     }, []);
   }
+  filter && (filter = filter.join('&'));
   const { token = null } = sessionToken(null, 'access');
   let headers = {
     'Authorization': `Bearer ${token}`

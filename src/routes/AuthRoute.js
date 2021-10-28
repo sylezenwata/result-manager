@@ -45,7 +45,7 @@ class AuthRoute extends Component {
     // fuction to disparse logout
     handleLogout = async () => {
         await userService.logout();
-        window.location.href = '/';
+        this.props.dispatch(logout());
     }
 
     // function to dispatch notifier

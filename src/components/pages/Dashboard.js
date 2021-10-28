@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 
 import { userService } from '../../services/user';
@@ -14,6 +14,7 @@ import BarLoader from '../hoc/BarLoader';
 import { callGetResult } from '../../utils/apiCalls';
 import ResultRow from '../hoc/ResultRow';
 import Notifier from '../hoc/Notifier';
+import InternalLoader from '../hoc/InternalLoader';
 
 class Dashboard extends Component {
 
@@ -312,7 +313,7 @@ class Dashboard extends Component {
                                       !this.state.results && !this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>Error getting results</td></tr>
                                     }
                                     {
-                                      this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>{this.state.loadingMessage}</td></tr>
+                                      this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>{<InternalLoader message={this.state.loadingMessage} column={true} />}</td></tr>
                                     }
                                     {
                                       this.state.more && !this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}><div className="btn-wrap flex justify-c" style={{marginTop: '0'}}><button onClick={() => {this.handleGetResults('Getting more results....');}} className="btn secondary" style={{padding: '7px 14px'}}>More</button></div></td></tr>
