@@ -21,7 +21,7 @@ export default class Sidebar extends Component {
                             <ul className="sideBar__list">
                                 <li className="list-item" data-active={this.props.path === '/dashboard'}>
                                     <Link to="/dashboard">
-                                        <div className="flex align-c p-lr-10 p-tb-10">
+                                        <div className="flex align-c" style={{padding: '7px 10px'}}>
                                             <span className="icon stroke" role="img">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -36,7 +36,7 @@ export default class Sidebar extends Component {
                                 </li>
                                 <li className="list-item" data-active={this.props.path === '/upload'}>
                                     <Link to="/upload">
-                                        <div className="flex align-c p-lr-10 p-tb-10">
+                                        <div className="flex align-c" style={{padding: '7px 10px'}}>
                                             <span className="icon stroke" role="img">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width={44} height={44} viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
