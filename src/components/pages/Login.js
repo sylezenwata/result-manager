@@ -74,7 +74,7 @@ class Login extends Component {
                         <div className={`form b-s-low`}>
                             <div className={`form-header flex flex-col align-c`}>
                                 <img src="/assets/media/images/logo.png" style={{width:"70px",height:"70px"}} className="me-3" alt={config.ORG_SHORT + ' Logo'} />
-                                <h2 className="text-c m-t-10">Admin</h2>
+                                <h2 className="text-c m-t-10">{config.APP_NAME}</h2>
                             </div>
                             <div className={`form-body`}>
                                 {
