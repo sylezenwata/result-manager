@@ -95,7 +95,7 @@
 		background: #49688e;
 	}
 	to {
-		background: #ffffff;
+		background: transparent;
 	}
 }
 @keyframes pulsate {

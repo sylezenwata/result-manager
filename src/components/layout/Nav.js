@@ -1,28 +1,9 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
 
-import { dropDown } from "../../utils/funcs";
-
-import SET from '../../vendors/set';
+import { dropDown, handleSidebar } from "../../utils/funcs";
 
 export default class Nav extends Component {
-
-    // function to handle sidebar
-    hadleSidebar() {
-        const sideBar = SET.$("#sideBar");
-        if (sideBar.classList.contains("active")) {
-            SET.fixClass([sideBar,'#sideBarOverlay'], [['active'],['active']], [false,false]);
-            setTimeout(() => {
-                SET.fixClass([sideBar,'#sideBarOverlay'], [['set'],['set']], [false,false]);
-            }, 350);
-            return;
-        }
-        SET.fixClass([sideBar,'#sideBarOverlay'], [['set'],['set']], [true,true]);
-        setTimeout(() => {
-            SET.fixClass([sideBar,'#sideBarOverlay'], [['active'],['active']], [true,true]);
-        }, 100);
-        SET.$("#sideBarOverlay").on("click", this.hadleSidebar, {once: true});
-    }
 
     render() {
         const { firstname, lastname, email } = this.props.user;
@@ -30,7 +11,7 @@ export default class Nav extends Component {
             <>
             <nav id="navBar">
                 <div className="nav-bar__ctrl flex justify-b align-c">
-                    <button onClick={this.hadleSidebar.bind(this)} type="button" className="toggle-menu icon stroke" style={{background: 'transparent', border: 'none'}} aria-label="Toggle Menu">
+                    <button onClick={handleSidebar.bind(this)} type="button" className="toggle-menu icon stroke" style={{background: 'transparent', border: 'none'}} aria-label="Toggle Menu">
                         <svg xmlns="http://www.w3.org/2000/svg" width={30} height={30} view-box="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <line x1={4} y1={6} x2={20} y2={6} />

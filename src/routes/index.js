@@ -6,8 +6,11 @@ import Login from "../components/pages/Login";
 
 import AuthRoute from "./AuthRoute";
 
-import Dashboard from "../components/pages/Dashboard";
-import Upload from '../components/pages/Upload';
+// import Dashboard from "../components/pages/Dashboard";
+// import Upload from '../components/pages/Upload';
+
+const Dashboard = React.lazy(() => import('../components/pages/Dashboard'));
+const Upload = React.lazy(() => import('../components/pages/Upload'));
 
 export default class Routes extends Component {
     render() {

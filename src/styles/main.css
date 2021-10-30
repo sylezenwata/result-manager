@@ -212,6 +212,12 @@
 .table tbody {
     font-size: 12px;
 }
+button:focus {
+    outline: none;
+}
+.btn {
+    box-shadow: none;
+}
 .notification-content .main-content,
 .notification-content .close {
     color: var(--text-color);
@@ -274,11 +280,11 @@
 }
 .table tr td:first-child,
 .table tr th:first-child {
-    border-left-width: 1px;
+    /* border-left-width: 1px; */
 }
 .table tr td:last-child,
 .table tr th:last-child {
-    border-right-width: 1px;
+    /* border-right-width: 1px; */
 }
 @media (min-width: 1026px) {
     #sideBar {

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import config from "../../utils/config";
+import { handleSidebar } from "../../utils/funcs";
 
 export default class Sidebar extends Component {
     render() {
@@ -20,7 +21,7 @@ export default class Sidebar extends Component {
                             </div>
                             <ul className="sideBar__list">
                                 <li className="list-item" data-active={this.props.path === '/dashboard'}>
-                                    <Link to="/dashboard">
+                                    <Link to="/dashboard" onClick={handleSidebar.bind(this)}>
                                         <div className="flex align-c" style={{padding: '7px 10px'}}>
                                             <span className="icon stroke" role="img">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -35,7 +36,7 @@ export default class Sidebar extends Component {
                                     </Link>
                                 </li>
                                 <li className="list-item" data-active={this.props.path === '/upload'}>
-                                    <Link to="/upload">
+                                    <Link to="/upload" onClick={handleSidebar.bind(this)}>
                                         <div className="flex align-c" style={{padding: '7px 10px'}}>
                                             <span className="icon stroke" role="img">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width={44} height={44} viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">

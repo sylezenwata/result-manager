@@ -40,7 +40,7 @@ class Noitifier extends Component {
             <>
             <div data-id="notifier" className="notification-wrap">
                 <div className="notification">
-                    <div className={`notification-content ${type}`}>
+                    <div className={`notification-content flex justify-b align-c ${type}`}>
                         <p className={`main-content${timeOut ? ' timed' : ''}`}>{message}</p>
                         {timeOut && <button onClick={this.handleRemoveNotification} className="close">&times;</button>}
                     </div>

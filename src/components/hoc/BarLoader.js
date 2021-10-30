@@ -1,6 +1,6 @@
-const BarLoader = ({ loading }) => (
+const BarLoader = () => (
     <>
-    <div className={`bar-loader${loading ? ' show' : ''}`}></div>
+    <div className="bar-loader show"></div>
     </>
 );
 

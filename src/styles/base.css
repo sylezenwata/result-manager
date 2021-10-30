@@ -9,7 +9,7 @@
 	--dark-color: #000000;
 	--mute-color: #70757a;
 	--mute-color-2: #efeded;
-	--hover-color: #efeded;
+	--hover-color: #f9f9f9;
     --img-bg-color: #fbfcfc;
 	--icon-color: #444343;
 	--border-color: #d9d9d9;
@@ -317,6 +317,7 @@ button .icon {
     height: 100%;
     margin: auto;
     display: inline-block;
+	width: 100%;
 }
 .notification-content .main-content.timed {
 	max-width: calc(100% - 35px);
@@ -327,14 +328,13 @@ button .icon {
 .notification-content .close {
 	color: var(--light-color);
     font-weight: 500;
-    font-size: 30px;
+    font-size: 20px;
     cursor: pointer;
-    position: absolute;
-    right: 10px;
-    top: calc((100% - 35px) / 2);
     width: 30px;
     background-color: transparent;
     border: none;
+    height: 30px
+;
 }
 .success {
 	background: var(--success-color);

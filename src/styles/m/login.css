@@ -32,6 +32,12 @@
 .form-header h2 {
     font-weight: 500;
 }
+button:focus {
+    outline: none;
+}
+.btn {
+    box-shadow: none;
+}
 @media (max-width: 1025px) {
     
 }

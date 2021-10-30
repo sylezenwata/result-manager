@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 
-import { userService } from '../../services/user';
 import config from '../../utils/config';
-
-import Nav from '../layout/Nav';
-import Sidebar from '../layout/Sidebar';
 
 import '../../styles/m/dashboard.css';
 
-import BarLoader from '../hoc/BarLoader';
-
 import { callGetResult } from '../../utils/apiCalls';
 import ResultRow from '../hoc/ResultRow';
-import Notifier from '../hoc/Notifier';
 import InternalLoader from '../hoc/InternalLoader';
 
 class Dashboard extends Component {
@@ -38,17 +31,7 @@ class Dashboard extends Component {
     madeSearch: false
   }
 
-  constructor(props) {
-    super(props);
-    props.dispatchBarLoading('start');
-  }
-
-  componentWillUnmount() {
-    this.props.dispatchNotifier(null);
-  }
-
   componentDidMount() {
-    this.props.dispatchBarLoading('end');
     this.handleGetResults();
   }
 
@@ -174,181 +157,175 @@ class Dashboard extends Component {
       <Helmet>
         <title>Dashboard - {config.APP_NAME}</title>
       </Helmet>
-      <div className="content">
-        <Nav user={userService.user} logout={this.props.dispatchLogout}/>
-        <Sidebar path={this.props.location.pathname} />
-        <BarLoader loading={this.props.barLoading}/>
-        <section id="main-con">
-          <div className="main-con__wrap flex flex-col p-lr-10">
-              <div className="main-con__head">Dashboard</div>
-              <div className="main-con__content position-r">
-                  <div className="flex flex-col">
-                      <div className="box-hol result-wrap">
-                          <div className="box p-10 b-rad-5">
-                            <div className="flex justify-b align-c flex-wrap m-b-10">
-                              <div className="">
-                                <h1 className="f-16">Results</h1>
-                                <p className="f-12 m-t-5">Use Filter to search for specific result(s)</p>
-                              </div>
-                              <button onClick={this.handleShowFilterForm.bind(this)} className="btn secondary flex align-c" style={{padding: '5px 10px'}}>
-                                <span className="icon stroke-light">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width={44} height={44} viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <circle cx={6} cy={10} r={2} />
-                                    <line x1={6} y1={4} x2={6} y2={8} />
-                                    <line x1={6} y1={12} x2={6} y2={20} />
-                                    <circle cx={12} cy={16} r={2} />
-                                    <line x1={12} y1={4} x2={12} y2={14} />
-                                    <line x1={12} y1={18} x2={12} y2={20} />
-                                    <circle cx={18} cy={7} r={2} />
-                                    <line x1={18} y1={4} x2={18} y2={5} />
-                                    <line x1={18} y1={9} x2={18} y2={20} />
-                                  </svg>
-                                </span>
-                                <span className="m-l-5">Filter</span>
-                              </button>
-                              {
-                                this.state.showFilterForm && 
-                                <div className="filter__wrap position-r">
-                                  <div className="drop-arrow drop-arrow__up"></div>
-                                  <form onChange={this.handleFilterFormChange.bind(this)} onSubmit={this.handleFilterForm} method="GET">
-                                    <div className="flex flex-wrap align-b p-tb-5 p-lr-5">
-                                      <div className="input-wrap p-5">
-                                        <div className="form-input__wrap">
-                                          <label className="form-input__label">
-                                            <span style={{fontSize:'10px'}}>Matric no.</span>
-                                            <input type="text" className="form-input" name="matno" style={{padding: '5px', height: 'unset'}} placeholder="Enter matric no." />
-                                          </label>
-                                        </div>
-                                      </div>
-                                      <div className="input-wrap p-5">
-                                        <div className="form-input__wrap">
-                                          <label className="form-input__label">
-                                            <span style={{fontSize:'10px'}}>Course code</span>
-                                            <input type="text" className="form-input" name="course" style={{padding: '5px', height: 'unset'}} placeholder="Enter course code" />
-                                          </label>
-                                        </div>
-                                      </div>
-                                      <div className="input-wrap p-5">
-                                        <div className="form-input__wrap">
-                                          <label className="form-input__label">
-                                            <span style={{fontSize:'10px'}}>Level</span>
-                                            <input type="text" className="form-input" name="level" style={{padding: '5px', height: 'unset'}} placeholder="Enter level" />
-                                          </label>
-                                        </div>
-                                      </div>
-                                      <div className="input-wrap p-5">
-                                        <div className="form-input__wrap">
-                                          <label className="form-input__label">
-                                            <span style={{fontSize:'10px'}}>Session</span>
-                                            <input type="text" className="form-input" name="session" style={{padding: '5px', height: 'unset'}} placeholder="Enter session" />
-                                          </label>
-                                        </div>
-                                      </div>
-                                      <div className="input-wrap p-5">
-                                        <div className="form-input__wrap">
-                                          <label className="form-input__label">
-                                            <span style={{fontSize:'10px'}}>Semester</span>
-                                            <input type="text" className="form-input" name="semester" style={{padding: '5px', height: 'unset'}} placeholder="Enter semester" />
-                                          </label>
-                                        </div>
-                                      </div>
-                                      <div className="input-wrap p-5">
-                                        <div className="form-input__wrap">
-                                          <label className="form-input__label">
-                                            <span style={{fontSize:'10px'}}>Department</span>
-                                            <input type="text" className="form-input" name="dept" style={{padding: '5px', height: 'unset'}} placeholder="Enter dept." />
-                                          </label>
-                                        </div>
-                                      </div>
-                                      <div className="input-wrap p-5">
-                                        <div className="form-input__wrap">
-                                          <label className="form-input__label">
-                                            <span style={{fontSize:'10px'}}>College</span>
-                                            <input type="text" className="form-input" name="college" style={{padding: '5px', height: 'unset'}} placeholder="Enter college" />
-                                          </label>
-                                        </div>
-                                      </div>
-                                      <div className="btn-wrap p-5" style={{marginTop: '0', padding: '5px', height: 'unset'}}>
-                                        <button type="submit" className="btn primary" style={{padding: '7px 14px', fontSize: '12px'}}>search</button>
+      <section id="main-con">
+        <div className="main-con__wrap flex flex-col p-lr-10">
+            <div className="main-con__head">Dashboard</div>
+            <div className="main-con__content position-r">
+                <div className="flex flex-col">
+                    <div className="box-hol result-wrap">
+                        <div className="box p-10 b-rad-5">
+                          <div className="flex justify-b align-c flex-wrap m-b-10">
+                            <div className="">
+                              <h1 className="f-16">Results</h1>
+                              <p className="f-12 m-t-5">Use Filter to search for specific result(s)</p>
+                            </div>
+                            <button onClick={this.handleShowFilterForm.bind(this)} className="btn secondary flex align-c" style={{padding: '5px 10px'}}>
+                              <span className="icon stroke-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width={44} height={44} viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                  <circle cx={6} cy={10} r={2} />
+                                  <line x1={6} y1={4} x2={6} y2={8} />
+                                  <line x1={6} y1={12} x2={6} y2={20} />
+                                  <circle cx={12} cy={16} r={2} />
+                                  <line x1={12} y1={4} x2={12} y2={14} />
+                                  <line x1={12} y1={18} x2={12} y2={20} />
+                                  <circle cx={18} cy={7} r={2} />
+                                  <line x1={18} y1={4} x2={18} y2={5} />
+                                  <line x1={18} y1={9} x2={18} y2={20} />
+                                </svg>
+                              </span>
+                              <span className="m-l-5">Filter</span>
+                            </button>
+                            {
+                              this.state.showFilterForm && 
+                              <div className="filter__wrap position-r">
+                                <div className="drop-arrow drop-arrow__up"></div>
+                                <form onChange={this.handleFilterFormChange.bind(this)} onSubmit={this.handleFilterForm} method="GET">
+                                  <div className="flex flex-wrap align-b p-tb-5 p-lr-5">
+                                    <div className="input-wrap p-5">
+                                      <div className="form-input__wrap">
+                                        <label className="form-input__label">
+                                          <span style={{fontSize:'10px'}}>Matric no.</span>
+                                          <input type="text" className="form-input" name="matno" style={{padding: '5px', height: 'unset'}} placeholder="Enter matric no." />
+                                        </label>
                                       </div>
                                     </div>
-                                  </form>
-                                </div>
-                              }
-                            </div>
-                            <div className="p-tb-10">
-                              <div className="table-wrap table-responsive custom-scroll" style={{marginTop: 0}}>
-                                <table className="table f-12" data-id="resultList">
-                                  <thead>
-                                    <tr>
-                                      <th>No.</th>
-                                      <th>Fullname</th>
-                                      <th>Matric No.</th>
-                                      <th>College</th>
-                                      <th>Dept.</th>
-                                      <th>Session</th>
-                                      <th>Semester</th>
-                                      <th>Level</th>
-                                      <th>Course</th>
-                                      <th>Unit</th>
-                                      <th>Score</th>
-                                      <th>Grade</th>
-                                      <th>Grade Point</th>
-                                      <th>Quality P</th>
-                                      <th>Remark</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {
-                                      this.state.results && (
-                                        this.state.results.length > 0 
-                                        ?  
-                                        this.state.results.map((result, index) => <ResultRow result={result} number={index+1} key={result.r_id} />)
-                                        : 
-                                        <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>No result was found</td></tr>
-                                      )
-                                    }
-                                    {
-                                      !this.state.results && !this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>Error getting results</td></tr>
-                                    }
-                                    {
-                                      this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>{<InternalLoader message={this.state.loadingMessage} column={true} />}</td></tr>
-                                    }
-                                    {
-                                      this.state.more && !this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}><div className="btn-wrap flex justify-c" style={{marginTop: '0'}}><button onClick={() => {this.handleGetResults('Getting more results....');}} className="btn secondary" style={{padding: '7px 14px'}}>More</button></div></td></tr>
-                                    }
-                                  </tbody>
-                                  {/* <tfoot>
-                                    <tr>
-                                      <th>No.</th>
-                                      <th>Fullname</th>
-                                      <th>Matric No.</th>
-                                      <th>College</th>
-                                      <th>Dept.</th>
-                                      <th>Session</th>
-                                      <th>Semester</th>
-                                      <th>Level</th>
-                                      <th>Course</th>
-                                      <th>Unit</th>
-                                      <th>Score</th>
-                                      <th>Grade</th>
-                                      <th>Grade Point</th>
-                                      <th>Quality P</th>
-                                      <th>Remark</th>
-                                    </tr>
-                                  </tfoot> */}
-                                </table>
+                                    <div className="input-wrap p-5">
+                                      <div className="form-input__wrap">
+                                        <label className="form-input__label">
+                                          <span style={{fontSize:'10px'}}>Course code</span>
+                                          <input type="text" className="form-input" name="course" style={{padding: '5px', height: 'unset'}} placeholder="Enter course code" />
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="input-wrap p-5">
+                                      <div className="form-input__wrap">
+                                        <label className="form-input__label">
+                                          <span style={{fontSize:'10px'}}>Level</span>
+                                          <input type="text" className="form-input" name="level" style={{padding: '5px', height: 'unset'}} placeholder="Enter level" />
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="input-wrap p-5">
+                                      <div className="form-input__wrap">
+                                        <label className="form-input__label">
+                                          <span style={{fontSize:'10px'}}>Session</span>
+                                          <input type="text" className="form-input" name="session" style={{padding: '5px', height: 'unset'}} placeholder="Enter session" />
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="input-wrap p-5">
+                                      <div className="form-input__wrap">
+                                        <label className="form-input__label">
+                                          <span style={{fontSize:'10px'}}>Semester</span>
+                                          <input type="text" className="form-input" name="semester" style={{padding: '5px', height: 'unset'}} placeholder="Enter semester" />
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="input-wrap p-5">
+                                      <div className="form-input__wrap">
+                                        <label className="form-input__label">
+                                          <span style={{fontSize:'10px'}}>Department</span>
+                                          <input type="text" className="form-input" name="dept" style={{padding: '5px', height: 'unset'}} placeholder="Enter dept." />
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="input-wrap p-5">
+                                      <div className="form-input__wrap">
+                                        <label className="form-input__label">
+                                          <span style={{fontSize:'10px'}}>College</span>
+                                          <input type="text" className="form-input" name="college" style={{padding: '5px', height: 'unset'}} placeholder="Enter college" />
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div className="btn-wrap p-5" style={{marginTop: '0', padding: '5px', height: 'unset'}}>
+                                      <button type="submit" className="btn primary" style={{padding: '7px 14px', fontSize: '12px'}}>search</button>
+                                    </div>
+                                  </div>
+                                </form>
                               </div>
+                            }
+                          </div>
+                          <div className="p-tb-10">
+                            <div className="table-wrap table-responsive custom-scroll" style={{marginTop: 0}}>
+                              <table className="table f-12" data-id="resultList">
+                                <thead>
+                                  <tr>
+                                    <th>No.</th>
+                                    <th>Fullname</th>
+                                    <th>Matric No.</th>
+                                    <th>College</th>
+                                    <th>Dept.</th>
+                                    <th>Session</th>
+                                    <th>Semester</th>
+                                    <th>Level</th>
+                                    <th>Course</th>
+                                    <th>Unit</th>
+                                    <th>Score</th>
+                                    <th>Grade</th>
+                                    <th>Grade Point</th>
+                                    <th>Quality P</th>
+                                    <th>Remark</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {
+                                    this.state.results && (
+                                      this.state.results.length > 0 
+                                      ?  
+                                      this.state.results.map((result, index) => <ResultRow result={result} number={index+1} key={result.r_id} />)
+                                      : 
+                                      <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>No result was found</td></tr>
+                                    )
+                                  }
+                                  {
+                                    !this.state.results && !this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>Error getting results</td></tr>
+                                  }
+                                  {
+                                    this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>{<InternalLoader message={this.state.loadingMessage} column={true} />}</td></tr>
+                                  }
+                                  {
+                                    this.state.more && !this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}><div className="btn-wrap flex justify-c" style={{marginTop: '0'}}><button onClick={() => {this.handleGetResults('Getting more results....');}} className="btn secondary" style={{padding: '7px 14px'}}>More</button></div></td></tr>
+                                  }
+                                </tbody>
+                                {/* <tfoot>
+                                  <tr>
+                                    <th>No.</th>
+                                    <th>Fullname</th>
+                                    <th>Matric No.</th>
+                                    <th>College</th>
+                                    <th>Dept.</th>
+                                    <th>Session</th>
+                                    <th>Semester</th>
+                                    <th>Level</th>
+                                    <th>Course</th>
+                                    <th>Unit</th>
+                                    <th>Score</th>
+                                    <th>Grade</th>
+                                    <th>Grade Point</th>
+                                    <th>Quality P</th>
+                                    <th>Remark</th>
+                                  </tr>
+                                </tfoot> */}
+                              </table>
                             </div>
                           </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </section>
-        {this.props.notifier && <Notifier />}
-      </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
       </>
     )
   }

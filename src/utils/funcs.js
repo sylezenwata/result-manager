@@ -109,7 +109,31 @@ export const dropDown = (e) => {
     }
 }
 
+/**
+ * function to show xss attack warning
+ */
 export const xssWarning = () => {
     console.log('%cWARNING!', 'background: #ff0; color: #f00; font-size: 25px; font-weight: 600');
     console.log('%cUsing this console may allow attackers to impersonate you and steal your information using an attack called Self-XSS.Do not enter or paste code that you do not understand.', 'font-size: 18px; font-weight: 600');
 };
+
+/**
+ * function to handle sidebar
+ */
+export const handleSidebar = () => {
+    if (SET.checkDeviceWidth() <= 1025) {
+        const sideBar = SET.$("#sideBar");
+        if (sideBar.classList.contains("active")) {
+            SET.fixClass([sideBar,'#sideBarOverlay'], [['active'],['active']], [false,false]);
+            setTimeout(() => {
+                SET.fixClass([sideBar,'#sideBarOverlay'], [['set'],['set']], [false,false]);
+            }, 350);
+            return;
+        }
+        SET.fixClass([sideBar,'#sideBarOverlay'], [['set'],['set']], [true,true]);
+        setTimeout(() => {
+            SET.fixClass([sideBar,'#sideBarOverlay'], [['active'],['active']], [true,true]);
+        }, 100);
+        SET.$("#sideBarOverlay").on("click", handleSidebar, {once: true});
+    }
+}
