@@ -66,7 +66,6 @@ class Login extends Component {
             <>
             <Helmet>
                 <title>Login - {config.APP_NAME}</title>
-                <meta name="description" content="Login as admin to manage results" />
             </Helmet>
             <div className="content flex">
                 <div className="main-panel p-tb-20 flex flex-col justify-c">
