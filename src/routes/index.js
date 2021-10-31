@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 
-// views component
-import Login from "../components/pages/Login";
-
+// custom Route component for pages that require authentication
 import AuthRoute from "./AuthRoute";
 
-// import Dashboard from "../components/pages/Dashboard";
-// import Upload from '../components/pages/Upload';
+// page components
+import Login from "../components/pages/Login";
+import NotFound from "../components/pages/NotFound";
 
+// lazy loaded page components
 const Dashboard = React.lazy(() => import('../components/pages/Dashboard'));
 const Upload = React.lazy(() => import('../components/pages/Upload'));
 
@@ -17,22 +17,10 @@ export default class Routes extends Component {
         return(
             <BrowserRouter>
                 <Switch>
-                    <Route 
-                        exact
-                        path="/"
-                        component={Login}
-                    />
-                    <AuthRoute
-                        exact
-                        path="/dashboard"
-                        component={Dashboard}
-                    />
-                    <AuthRoute
-                        exact
-                        path="/upload"
-                        component={Upload}
-                    />
-                    {/* <Route component={} /> */}
+                    <Route exact path="/" component={Login} />
+                    <AuthRoute path="/dashboard" component={Dashboard} />
+                    <AuthRoute path="/upload" component={Upload} />
+                    <Route component={NotFound} />
                 </Switch>
             </BrowserRouter>
         );
