@@ -42,7 +42,7 @@ const fetchWithErrorHandling = async (reqParams, _config = null) => {
         let _message = ((err2.response?.data.message) || err2.message || 'An error occurred sending request, try again')
         let code = err.response?.data.code;
         if (code && code === 401) {
-          _message = 'Login session expired, login again';
+          _message = 'Your session expired, login again';
         }
         return { error: true, message: _message };
       }
