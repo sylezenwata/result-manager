@@ -10,6 +10,7 @@ import { userService } from '../services/user';
 import { notify, unnotify } from '../redux/modules/notifier/action';
 
 import '../styles/main.css';
+
 import Sidebar from '../components/layout/Sidebar';
 import Nav from '../components/layout/Nav';
 import Notifier from '../components/hoc/Notifier';

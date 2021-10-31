@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 
-// custom Route component for pages that require authentication
-import AuthRoute from "./AuthRoute";
-
 // page components
 import Login from "../components/pages/Login";
 import NotFound from "../components/pages/NotFound";
+
+// custom Route component for pages that require authentication
+import AuthRoute from "./AuthRoute";
 
 // lazy loaded page components
 const Dashboard = React.lazy(() => import('../components/pages/Dashboard'));
