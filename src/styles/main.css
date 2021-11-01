@@ -32,9 +32,10 @@
     height: 100%;
 }
 .nav-bar__ctrl .toggle-menu {
-    width: 25px;
-    height: 25px;
+    width: unset;
+    height: unset;
     visibility: hidden;
+    padding: 0.25rem 0.35rem;
 }
 .nav-bar__ctrl .toggle-menu svg {
     stroke: var(--icon-color);
