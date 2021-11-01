@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import { userService } from '../services/user';
 
 import { notify, unnotify } from '../redux/modules/notifier/action';
+import { addResults, clearResults } from '../redux/modules/results/action';
 
 import '../styles/main.css';
 
@@ -59,6 +60,20 @@ class AuthRoute extends Component {
         this.props.dispatch(notify({ message, type, timeOut }));
     }
 
+    // function to manage results
+    handleResults = ({ type, results, moreResults, refreshResults }) => {
+        switch (type) {
+            case 'add':
+                this.props.dispatch(addResults({ results, moreResults, refreshResults }));
+                break;
+            case 'clear':
+                this.props.dispatch(clearResults());
+                break;
+            default:
+                break;
+        }
+    }
+
     // rendering
     render() {
         const { component: Component, ...rest } = this.props;
@@ -72,7 +87,13 @@ class AuthRoute extends Component {
                         props => (
                             Object.assign(
                                 props ? props : {}, 
-                                { dispatchNotifier: this.handleNotifier.bind(this) }
+                                { 
+                                    dispatchNotifier: this.handleNotifier.bind(this),
+                                    dispatchResults: this.handleResults.bind(this),
+                                    results: this.props.results,
+                                    moreResults: this.props.moreResults,
+                                    refreshResults: this.props.refreshResults
+                                }
                             ),
                             (
                                 userService.userExists ? <Component {...props}/> : <Redirect to={{ pathname: "/", state: { from: props.location.pathname} }}/>
@@ -89,13 +110,19 @@ class AuthRoute extends Component {
     // define prop type
     static propTypes = {
         component: PropTypes.any.isRequired,
-        notifier: PropTypes.bool.isRequired
+        notifier: PropTypes.bool.isRequired,
+        refreshResults: PropTypes.bool.isRequired,
+        moreResults: PropTypes.bool.isRequired,
+        results: PropTypes.any,
     }
 }
 
 const mapStoreProps = store => {
     return {
-        notifier: get(store, 'notifierReducer.notifier')
+        notifier: get(store, 'notifierReducer.notifier'),
+        results: get(store, 'resultsReducer.results'),
+        moreResults: get(store, 'resultsReducer.moreResults'),
+        refreshResults: get(store, 'resultsReducer.refreshResults'),
     }
 };
 

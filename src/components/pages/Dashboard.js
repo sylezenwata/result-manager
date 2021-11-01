@@ -12,9 +12,8 @@ import InternalLoader from '../hoc/InternalLoader';
 class Dashboard extends Component {
 
   state = {
-    results: null,
     more: false,
-    loadingResults: true,
+    loadingResults: false,
     loadingMessage: null,
     resultFilter: {
       matno: null, 
@@ -24,15 +23,14 @@ class Dashboard extends Component {
       semester: null, 
       level: null, 
       course: null, 
-      offset: null
+      offset: (this.props.results?.length || null)
     },
     showFilterForm: false,
-    disableFilterForm: false,
     madeSearch: false
   }
 
   componentDidMount() {
-    this.handleGetResults();
+    (!this.props.results || this.props.refreshResults) && this.handleGetResults();
   }
 
   handleGetResults = async (loadingMessage = 'Getting results, please wait...') => {
@@ -44,45 +42,26 @@ class Dashboard extends Component {
     }, {});
     let res = await callGetResult(Object.keys(filter).length > 0 ? filter : null);
     if (res.error) {
-      this.setState({loadingResults: false});
+      this.setState({ loadingResults: false });
       return this.props.dispatchNotifier({message: res.message, type: 'error'});
     }
     const { results, more } = res;
-    this.setState(
-      (prevState) => ({ 
-        results: (prevState.results?.concat(results) || results), 
-        more: more, 
-        loadingResults: false,
-      })
-    );
-    // update resultFilter offset for more results
-    more 
-    ? 
-    this.setState(
-      prevState => ({
-        resultFilter: {
-          ...prevState.resultFilter,
-          offset: prevState.results.length
-        }
-      })
-    )
-    :
-    this.setState(
-      prevState => ({
-        resultFilter: {
-          ...prevState.resultFilter,
-          offset: null
-        }
-      })
-    )
+    // store results in redux
+    this.props.dispatchResults({
+      type: 'add', 
+      results: (this.props.results?.concat(results) || results),
+      moreResults: more,
+      refreshResults: this.state.madeSearch
+    });
+    // end loading & update resultFilter offset for more results
+    this.setState(prevState => ({loadingResults: false, resultFilter: {...prevState.resultFilter, offset: (more ? this.props.results.length : null)}}))
   };
 
   handleShowFilterForm = async () => {
-    // search was used
-    if (this.state.showFilterForm && this.state.madeSearch) {
+    // if search was used
+    if (this.state.showFilterForm && this.props.refreshResults) {
+      this.props.dispatchResults({type: 'clear'});
       await this.setState(prevState => ({
-        more: false, 
-        results: null,
         madeSearch: false,
         resultFilter: {
           ...prevState.resultFilter,
@@ -136,9 +115,8 @@ class Dashboard extends Component {
     // val if any filter inputs has data
     if (Object.keys(this.state.resultFilter).some(e => (e !== 'offset'  && this.state.resultFilter[e] !== null))) {
       // clear results and more
+      this.props.dispatchResults({type: 'clear'});
       await this.setState(prevState => ({
-        results: null, 
-        more: false,
         madeSearch: true,
         resultFilter: {
           ...prevState.resultFilter,
@@ -147,7 +125,7 @@ class Dashboard extends Component {
       }));
       this.handleGetResults('Searching result(s)...');
     } else {
-      this.props.dispatchNotifier({message: 'Please enter a valid search value', type: 'error'})
+      this.props.dispatchNotifier({ message: 'Please enter a valid search value', type: 'error' })
     }
   };
 
@@ -280,22 +258,22 @@ class Dashboard extends Component {
                                 </thead>
                                 <tbody>
                                   {
-                                    this.state.results && (
-                                      this.state.results.length > 0 
+                                    this.props.results && (
+                                      this.props.results.length > 0 
                                       ?  
-                                      this.state.results.map((result, index) => <ResultRow result={result} number={index+1} key={result.r_id} />)
+                                      this.props.results.map((result, index) => <ResultRow result={result} number={index+1} key={result.r_id} />)
                                       : 
                                       <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>No result was found</td></tr>
                                     )
                                   }
                                   {
-                                    !this.state.results && !this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>Error getting results</td></tr>
+                                    !this.props.results && !this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>Error getting results</td></tr>
                                   }
                                   {
                                     this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}>{<InternalLoader message={this.state.loadingMessage} column={true} />}</td></tr>
                                   }
                                   {
-                                    this.state.more && !this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}><div className="btn-wrap flex justify-c" style={{marginTop: '0'}}><button onClick={() => {this.handleGetResults('Getting more results....');}} className="btn secondary" style={{padding: '7px 14px'}}>More</button></div></td></tr>
+                                    this.props.moreResults && !this.state.loadingResults && <tr style={{backgroundColor:'var(--bg-color)'}}><td colSpan="15" style={{textAlign: 'center'}}><div className="btn-wrap flex justify-c" style={{marginTop: '0'}}><button onClick={() => {this.handleGetResults('Getting more results....');}} className="btn secondary" style={{padding: '7px 14px'}}>More</button></div></td></tr>
                                   }
                                 </tbody>
                                 {/* <tfoot>
