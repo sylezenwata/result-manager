@@ -71,7 +71,7 @@ class Login extends Component {
                 <div className="main-panel p-tb-20 flex flex-col justify-c">
                     <form onSubmit={this.handleSubmit} method="post" className="m-b-20">
                         <div className={`form b-s-low`}>
-                            <div className={`form-header flex flex-col align-c`}>
+                            <div className={`form-header flex flex-col align-c m-t-10`}>
                                 <img src="/assets/media/images/logo.png" style={{width:"70px",height:"70px"}} className="me-3" alt={config.ORG_SHORT + ' Logo'} />
                                 <h2 className="text-c m-t-10">{config.APP_NAME}</h2>
                             </div>
