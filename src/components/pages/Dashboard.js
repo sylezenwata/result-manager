@@ -125,7 +125,7 @@ class Dashboard extends Component {
       }));
       this.handleGetResults('Searching result(s)...');
     } else {
-      this.props.dispatchNotifier({ message: 'Please enter a valid search value', type: 'error' })
+      this.props.dispatchNotifier({message: 'Please enter a valid search value', type: 'error'})
     }
   };
 
@@ -162,7 +162,7 @@ class Dashboard extends Component {
                                   <line x1={18} y1={9} x2={18} y2={20} />
                                 </svg>
                               </span>
-                              <span className="m-l-5">Filter</span>
+                              <span className="p-lr-5">Filter</span>
                             </button>
                             {
                               this.state.showFilterForm && 
