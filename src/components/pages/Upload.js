@@ -89,6 +89,7 @@ class Upload extends Component {
     // clear uploaded file and show success response
     this.handleClearCsvFile();
     this.props.dispatchNotifier({message: (res.message || 'Result upload was successful.'), type: 'success'});
+    this.props.dispatchResults({type: 'clear'});
   }
 
   render() {
