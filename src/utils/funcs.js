@@ -24,9 +24,9 @@ export const sessionToken = (tokens, type = null) => {
         let token = sessionStorage.getItem(type);
         return JSON.parse(token);
     }
-    let { access, refresh } = tokens;
-    sessionStorage.setItem('access', JSON.stringify(access))
-    sessionStorage.setItem('refresh', JSON.stringify(refresh));
+    let { access = null, refresh = null } = tokens;
+    access && sessionStorage.setItem('access', JSON.stringify(access))
+    refresh && sessionStorage.setItem('refresh', JSON.stringify(refresh));
 };
 
 /**

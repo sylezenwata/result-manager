@@ -33,10 +33,10 @@ const fetchWithErrorHandling = async (reqParams, _config = null) => {
     let code = err.response?.data.code;
     if (code && code === 401) {
       try {
-        let tokens = await (await axios(setInit({ url: `${config.API_URL}/auth/refreshToken?client=admin`, data: {refresh_token: sessionToken(null, 'refresh').token } }))).data;
-        await sessionToken(tokens);
+        let { access } = await (await axios(setInit({ url: `${config.API_URL}/auth/refreshToken?client=admin`, data: {refresh_token: sessionToken(null, 'refresh').token } }))).data;
+        await sessionToken({ access });
         // update prevReqData authorization header and resend req
-        prevReqData.reqParams.headers['Authorization'] = `Bearer ${tokens?.access.token}`;
+        prevReqData.reqParams.headers['Authorization'] = `Bearer ${access?.token}`;
         return await (await axios(prevReqData.reqParams, prevReqData._config)).data;
       } catch (err2) {
         let _message = ((err2.response?.data.message) || err2.message || 'An error occurred sending request, try again')
