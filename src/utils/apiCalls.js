@@ -10,9 +10,13 @@ import { sessionToken } from './funcs';
 const setInit = ({ url, headers, method = 'post', data = null}) => {
     let staticHeaders = {
         'Accept': '*/*',
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json;charset=utf-8'
     };
     headers = headers && typeof headers === 'object' ? Object.assign(staticHeaders, headers) : staticHeaders;
+    headers = Object.keys(headers).reduce((acc, key) => {
+        headers[key] && (acc[key] = headers[key]);
+        return acc;
+    }, {});
     return { url, method, headers, data };
 };
 
@@ -106,6 +110,7 @@ export const callGetResult = async (filter = null) => {
   filter && (filter = filter.join('&'));
   const { token = null } = sessionToken(null, 'access');
   let headers = {
+    'Content-Type': false,
     'Authorization': `Bearer ${token}`
   };
   return fetchWithErrorHandling(setInit({ url: `${config.API_URL}/result${filter ? '?'+filter : ''}`, method: 'GET', headers }));
