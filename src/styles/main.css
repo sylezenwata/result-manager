@@ -315,7 +315,8 @@ button:focus {
     }
     .nav-bar__ctrl {
         padding: 0 10px;
-        border: 1px solid var(--border-color);
+        border: none;
+        box-shadow: 0 1px 3px 0 rgb(3 27 78 / 15%);
     }
     .nav-bar__ctrl .toggle-menu {
         visibility: visible;
